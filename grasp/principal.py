@@ -60,7 +60,7 @@ def imprime_solucao(solucao):
 ### METODO PRINCIPAL QUE RECEBE A URL DO CASO DE TESTE E RETORNA 
 ### A MELHOR SOLUCAO [GRADE DE HORARIOS, FITNESS DA SOLUCAO] ENCONTRADA
 ### 
-def principal(url_caso_de_teste, max_iteracoes = 1000, calcula_solucao_inicial = true):
+def principal(url_caso_de_teste, max_iteracoes = 1000, calcula_solucao_inicial = True):
     disc_prof_hor = pd.read_csv(url_caso_de_teste, sep = ';')
     disc_prof_hor = disc_prof_hor.values
     aulas = gera_aulas(disc_prof_hor)
