@@ -69,7 +69,7 @@ def calcula_vizinho(solucao_inicial):
     #trocas = [horarios[0]+10*sala, horarios[1]+10*sala]
 
     # Randomizacao trocando todas as posicoes na grade
-    trocas = random.sample(list(range(0,len(solucao[0]))), 2)
+    trocas = random.sample(list(range(0,len(solucao_inicial[0]))), 2)
     solucao = copy.deepcopy(solucao_inicial)
     auxiliar = solucao[0][trocas[0]]
     solucao[0][trocas[0]] = solucao[0][trocas[1]]
