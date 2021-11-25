@@ -1,5 +1,6 @@
 import copy
 import random
+import fitness
 
 ### FUNCAO AUXILIAR DA "CALCULA_RCL" QUE DETERMINA O CUSTO DE SELEÇÃO DO
 ### PROXIMO PROFESSOR PARA A GRADE
@@ -53,7 +54,7 @@ def grasp_construcao(aulas, alfa_rcl):
         solucao[0].append(elemento)
         candidatos.remove(elemento)
         calcula_custos(candidatos)
-    solucao[1] = funcao_objetivo(solucao[0])
+    solucao[1] = fitness.funcao_objetivo(solucao[0])
     return solucao
 
 
@@ -73,7 +74,7 @@ def calcula_vizinho(solucao_inicial):
     auxiliar = solucao[0][trocas[0]]
     solucao[0][trocas[0]] = solucao[0][trocas[1]]
     solucao[0][trocas[1]] = auxiliar
-    solucao[1] = funcao_objetivo(solucao[0])
+    solucao[1] = fitness.funcao_objetivo(solucao[0])
     return solucao
 
 
