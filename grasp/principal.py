@@ -2,6 +2,8 @@ import copy
 import random
 import numpy  as np
 import pandas as pd
+import fitness
+import grasp
 
 ### GERA UMA SOLUCAO ALEATORIA [GRADE DE HORARIOS,FITNESS DA SOLUCAO] 
 ### COM BASE NO CONJUNTO DE AULAS NECESSARIAS 
@@ -15,7 +17,7 @@ def solucao_aleatoria(aulas):
     #solucao[0] = sequencia
     #solucao[1] = funcao_objetivo(aulas, sequencia)
     solucao[0] = random.sample(aulas, len(aulas))
-    solucao[1] = funcao_objetivo(solucao[0])
+    solucao[1] = fitness.funcao_objetivo(solucao[0])
     return solucao
 
 ### FUNCAO QUE TRANSFORMA A ESTRUTURA DO TIPO
@@ -63,6 +65,6 @@ def principal(url_caso_de_teste)
     disc_prof_hor = disc_prof_hor.values
     aulas = gera_aulas(disc_prof_hor)
     solucao_inicial = solucao_aleatoria(aulas)
-    melhor_solucao = grasp(aulas,solucao_inicial, max_iteracoes = 1000)
+    melhor_solucao = grasp.grasp_grade(aulas,solucao_inicial, max_iteracoes = 1000)
     imprime_solucao(melhor_solucao)
     return
