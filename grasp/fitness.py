@@ -20,11 +20,11 @@ def funcao_objetivo(solucao):
         for horario in range(total_horarios):
             for sala_atual in range(total_salas):
                 evento_atual = dia*total_dias*total_horarios+horario*total_salas+sala_atual 
-                professor_atual = solucao[evento_atual][1]
+                professor_atual = solucao[evento_atual][0]
                 if (professor_atual != 'VAGO'):
                     for proxima_sala in range(sala_atual+1,total_salas):
                         proximo_evento = dia*total_dias*total_horarios+horario*total_salas+proxima_sala
-                        proximo_professor = solucao[proximo_evento][1]
+                        proximo_professor = solucao[proximo_evento][0]
                         if (professor_atual == proximo_professor):
                             violacoes+=1
                             # evita a recontagem quando o mesmo professor 
@@ -39,11 +39,11 @@ def funcao_objetivo(solucao):
     for dia in range(total_dias):
         for sala_h1 in range(total_salas):
             evento_h1 = dia*total_dias*total_horarios+sala_h1
-            disciplina_h1 = solucao[evento_h1][0]
+            disciplina_h1 = solucao[evento_h1][1]
             if (disciplina_h1 != 'VAGO'):
                 for sala_h2 in range(total_salas):
                     evento_h2 = dia*total_dias*total_horarios+sala_h2+total_salas
-                    disciplina_h2 = solucao[evento_h2][0]
+                    disciplina_h2 = solucao[evento_h2][1]
                     if (disciplina_h1 == disciplina_h2): # a mesma disciplina acontece no mesmo dia
                         if (sala_h1 == sala_h2): # se for na mesma sala a penalizacao reduz pela metade
                             violacoes+=0.05
