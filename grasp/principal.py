@@ -29,11 +29,11 @@ def solucao_aleatoria(aulas):
 ### CASO QUANTIDADE DE AULAS NECESSARIAS SEJA MENOR QUE O TAMANHO DA GRADE (50)
 ### O RESTANTE DA GRADE É PREENCHIDO COM VALORES ['VAGO','VAGO']
 
-def gera_aulas(disc_prof_hor):
+def gera_aulas(prof_disc_hora):
     # dt = np.dtype([('disciplina', np.unicode_, 4), ('professor', np.unicode_, 4)])
     aulas = [] 
-    for i in range(0, disc_prof_hor.shape[0]):
-        aula = disc_prof_hor[i] 
+    for i in range(0, prof_disc_hora.shape[0]):
+        aula = prof_disc_hora[i] 
         num_periodos = aula[2]
         for j in range(0, num_periodos):
           aulas.append((aula[0],aula[1]))
@@ -61,9 +61,9 @@ def imprime_solucao(solucao):
 ### A MELHOR SOLUCAO [GRADE DE HORARIOS, FITNESS DA SOLUCAO] ENCONTRADA
 ### 
 def principal(url_caso_de_teste, max_iteracoes = 1000, calcula_solucao_inicial = True):
-    disc_prof_hor = pd.read_csv(url_caso_de_teste, sep = ';')
-    disc_prof_hor = disc_prof_hor.values
-    aulas = gera_aulas(disc_prof_hor)
+    prof_disc_hora = pd.read_csv(url_caso_de_teste, sep = ';')
+    prof_disc_hora = prof_disc_hora.values
+    aulas = gera_aulas(prof_disc_hora)
     if (calcula_solucao_inicial):
         solucao_inicial = solucao_aleatoria(aulas)      
         melhor_solucao = grasp.grasp_grade(aulas, solucao_inicial, max_iteracoes)
