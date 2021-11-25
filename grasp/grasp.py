@@ -12,10 +12,10 @@ def calcula_custos(candidatos):
     custos = []
     professores = []
     for i in range(0, len(candidatos)):
-        if (candidatos[i][1] != 'VAGO'):
-            professores.append(candidatos[i][1])
+        if (candidatos[i][0] != 'VAGO'):
+            professores.append(candidatos[i][0])
     for i in range(0, len(candidatos)):
-        custo = 50 - professores.count(candidatos[i][1])
+        custo = 50 - professores.count(candidatos[i][0])
         custos.append(custo)
     return custos
 
