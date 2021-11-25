@@ -60,11 +60,14 @@ def imprime_solucao(solucao):
 ### METODO PRINCIPAL QUE RECEBE A URL DO CASO DE TESTE E RETORNA 
 ### A MELHOR SOLUCAO [GRADE DE HORARIOS, FITNESS DA SOLUCAO] ENCONTRADA
 ### 
-def principal(url_caso_de_teste):
+def principal(url_caso_de_teste, max_iteracoes = 1000, calcula_solucao_inicial = true):
     disc_prof_hor = pd.read_csv(url_caso_de_teste, sep = ';')
     disc_prof_hor = disc_prof_hor.values
     aulas = gera_aulas(disc_prof_hor)
-    solucao_inicial = solucao_aleatoria(aulas)
-    melhor_solucao = grasp.grasp_grade(aulas,solucao_inicial, max_iteracoes = 1000)
+    if (calcula_solucao_inicial):
+        solucao_inicial = solucao_aleatoria(aulas)      
+        melhor_solucao = grasp.grasp_grade(aulas, solucao_inicial, max_iteracoes)
+    else:
+        melhor_solucao = grasp.grasp_grade(aulas, max_iteracoes = max_iteracoes)
     imprime_solucao(melhor_solucao)
     return
