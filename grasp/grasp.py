@@ -108,7 +108,7 @@ def busca_local(solucao_inicial, max_iteracoes = 1000, limite = 0):
 ### ALFA_RCL PRÓXIMO A UM   -> BUSCA MAIS ALEATORIA 
 ### E NO LIMITE (THRESHOLD) PARA ENCERRAR A BUSCA GLOBAL (LIMITE - PADRAO = 0)
 
-def grasp(aulas, solucao_inicial = [[],float("inf")], max_iteracoes = 5000, alfa_rcl = 0.5, limite = 0):
+def grasp_grade(aulas, solucao_inicial = [[],float("inf")], max_iteracoes = 5000, alfa_rcl = 0.5, limite = 0):
     contador = 0
     melhor_solucao = copy.deepcopy(solucao_inicial)
     while (contador < max_iteracoes and melhor_solucao[1]>limite):
