@@ -2,8 +2,8 @@ import copy
 import random
 import numpy  as np
 import pandas as pd
-import fitness
-import grasp
+import grasp.fitness
+import grasp.grasp
 
 ### GERA UMA SOLUCAO ALEATORIA [GRADE DE HORARIOS,FITNESS DA SOLUCAO] 
 ### COM BASE NO CONJUNTO DE AULAS NECESSARIAS 
