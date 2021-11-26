@@ -59,16 +59,15 @@ def funcao_objetivo(solucao):
 # Considera-se o número total de posicoes da grade (salas*dias*horarios) = 50 
 # Como é uma premissa desejável e não obrigatória o peso da violacao é 0.1
     
-    solucao_reversa = copy.deepcopy(solucao)
-    solucao_reversa.reverse()
-    buracos = 0;
-    posicao_inicial = 0;
-    while (posicao_inicial < 50 and solucao_reversa[posicao_inicial][1] == 'VAGO'):
-        posicao_inicial+=1
-    for i in range(posicao_inicial+1, len(solucao_reversa)):
-        if (solucao_reversa[i][0] == 'VAGO'):
-            buracos+=1
-    violacoes = violacoes + 0.1*buracos;
+    posicao_final = 49;
+    while (posicao_final > -1 and solucao[posicao_final][1] == 'VAGO'):
+        posicao_final-=1
+    for i in range(0, posicao_final+1):
+        if (solucao[i][0] == 'VAGO'):
+            if ((i // 5) % 2 == 0) # o horario sem aula é o primeiro do dia
+               violacoes+=0.1
+            else:
+               violacoes+=0.05 # o horario sem aula é o segundo do dia (penalização menor)
 
 # Solucao alternativa para as salas vagas (buracos na grade)
 # Como não foi identificado problema de performance
