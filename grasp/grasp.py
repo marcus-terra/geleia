@@ -92,12 +92,12 @@ def busca_local(solucao_inicial,
                 max_iteracoes = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL, 
                 limite = const.PADRAO_LIMITE_BUSCA_LOCAL):
     contador = 0
-    melhor_solucao = copy.deepcopy(solucao_inicial)
+    melhor_solucao = solucao_inicial
     while (contador < max_iteracoes and melhor_solucao[const.INDICE_FITNESS]>limite):
         solucao = calcula_vizinho(melhor_solucao)
         if (solucao[const.INDICE_FITNESS] < melhor_solucao[const.INDICE_FITNESS]):
             contador = 0
-            melhor_solucao = copy.deepcopy(solucao)
+            melhor_solucao = solucao
         else: 
             contador += 1 
     return melhor_solucao
@@ -122,12 +122,12 @@ def grasp_grade(aulas,
                 max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL,
                 limite_busca_local = const.PADRAO_LIMITE_BUSCA_LOCAL):
     contador = 0
-    melhor_solucao = copy.deepcopy(solucao_inicial)
+    melhor_solucao = solucao_inicial
     while (contador < max_iteracoes and melhor_solucao[const.INDICE_FITNESS]>limite):
         solucao = grasp_construcao(aulas, alfa_rcl)
         solucao = busca_local(solucao, max_iteracoes = max_iteracoes_busca_local, limite = limite_busca_local)
         if (solucao[const.INDICE_FITNESS] < melhor_solucao[const.INDICE_FITNESS]):
-            melhor_solucao = copy.deepcopy(solucao) 
+            melhor_solucao = solucao 
         contador += 1
         #print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
         print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS])
