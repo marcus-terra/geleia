@@ -1,6 +1,7 @@
 import copy
 import random
 import fitness
+import constantes as const
 
 ### FUNCAO AUXILIAR DA "CALCULA_RCL" QUE DETERMINA O CUSTO DE SELEÇÃO DO
 ### PROXIMO PROFESSOR PARA A GRADE
@@ -12,10 +13,11 @@ def calcula_custos(candidatos):
     custos = []
     professores = []
     for i in range(0, len(candidatos)):
-        if (candidatos[i][0] != 'VAGO'):
-            professores.append(candidatos[i][0])
+        if (candidatos[i][const.INDICE_PROFESSOR] != const.HORARIO_VAGO):
+            professores.append(candidatos[i][const.INDICE_PROFESSOR])
     for i in range(0, len(candidatos)):
-        custo = 50 - professores.count(candidatos[i][0]) # TOTAL GERAL DE AULAS MENOS QUANTAS AULAS (HORARIOS) NA SEMANA UM PROFESSOR TEM
+        # CUSTO = TOTAL DE HORARIOS NA GRADE - QUANTAS AULAS (HORARIOS) NA SEMANA UM PROFESSOR AINDA TEM
+        custo = const.TOTAL_HORARIOS_GRADE - professores.count(candidatos[i][const.INDICE_PROFESSOR]) 
         custos.append(custo)
     return custos
 
@@ -27,7 +29,7 @@ def calcula_custos(candidatos):
 ### ALFA_RCL PRÓXIMO A ZERO -> BUSCA MAIS GULOSA
 ### ALFA_RCL PRÓXIMO A UM   -> BUSCA MAIS ALEATORIA 
 
-def calcula_rcl(candidatos, custos, custo_min, custo_max, alfa_rcl):
+def calcula_rcl(candidatos, custos, custo_min, custo_max, alfa_rcl = const.PADRAO_ALFA_RCL):
     rcl = []
     for i in range(0, len(candidatos)):
         if (custos[i] <= custo_min + alfa_rcl*(custo_max - custo_min)):
@@ -42,19 +44,20 @@ def calcula_rcl(candidatos, custos, custo_min, custo_max, alfa_rcl):
 ### ALFA_RCL PRÓXIMO A ZERO -> BUSCA MAIS GULOSA
 ### ALFA_RCL PRÓXIMO A UM   -> BUSCA MAIS ALEATORIA 
 
-def grasp_construcao(aulas, alfa_rcl):
-    solucao = [[],float("inf")]
+def grasp_construcao(aulas, alfa_rcl = const.PADRAO_ALFA_RCL):
+    solucao = const.PADRAO_SOLUCAO_INICIAL_VAZIA
     candidatos = copy.deepcopy(aulas)
     custos = calcula_custos(candidatos)
     while (len(candidatos) > 0):
         custo_min = min(custos)
         custo_max = max(custos)
         rcl = calcula_rcl(candidatos, custos, custo_min, custo_max, alfa_rcl)
+        # seleciona um elemento aleatório no vetor de candidatos (RCL)
         elemento = rcl[random.randrange(len(rcl))]
-        solucao[0].append(elemento)
+        solucao[const.INDICE_GRADE].append(elemento)
         candidatos.remove(elemento)
         calcula_custos(candidatos)
-    solucao[1] = fitness.funcao_objetivo(solucao[0])
+    solucao[const.INDICE_FITNESS] = fitness.funcao_objetivo(solucao[const.INDICE_GRADE])
     return solucao
 
 
@@ -68,13 +71,13 @@ def calcula_vizinho(solucao_inicial):
     #sala = random.randrange(5)
     #trocas = [horarios[0]+10*sala, horarios[1]+10*sala]
 
-    # Randomizacao trocando todas as posicoes na grade (seleciona dos valores aleatorios dentro da grade)
-    trocas = random.sample(list(range(0,len(solucao_inicial[0]))), 2)
+    # Randomizacao trocando todas as posicoes na grade (seleciona duas posicoes aleatorias dentro da grade)
+    trocas = random.sample(list(range(0,len(solucao_inicial[const.INDICE_GRADE]))), 2)
     solucao = copy.deepcopy(solucao_inicial)
-    auxiliar = solucao[0][trocas[0]]
-    solucao[0][trocas[0]] = solucao[0][trocas[1]]
-    solucao[0][trocas[1]] = auxiliar
-    solucao[1] = fitness.funcao_objetivo(solucao[0])
+    auxiliar = solucao[const.INDICE_GRADE][trocas[0]]
+    solucao[const.INDICE_GRADE][trocas[0]] = solucao[const.INDICE_GRADE][trocas[1]]
+    solucao[const.INDICE_GRADE][trocas[1]] = auxiliar
+    solucao[const.INDICE_FITNESS] = fitness.funcao_objetivo(solucao[const.INDICE_GRADE])
     return solucao
 
 
@@ -85,16 +88,18 @@ def calcula_vizinho(solucao_inicial):
 ### PARA CADA NOVA MELHOR SOLUCAO ENCONTRADA É 1000 (MAX_ITERACOES)
 ### E O LIMITE PADRAO (THRESHOLD) PARA ENCERRAR A BUSCA LOCAL É ZERO
 
-def busca_local(solucao_inicial, max_iteracoes = 1000, limite = 0):
+def busca_local(solucao_inicial, 
+                max_iteracoes = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL, 
+                limite = const.PADRAO_LIMITE_BUSCA_LOCAL):
     contador = 0
     melhor_solucao = copy.deepcopy(solucao_inicial)
-    while (contador < max_iteracoes and melhor_solucao[1]>limite):
+    while (contador < max_iteracoes and melhor_solucao[const.INDICE_FITNESS]>limite):
         solucao = calcula_vizinho(melhor_solucao)
-        if (solucao[1] < melhor_solucao[1]):
+        if (solucao[const.INDICE_FITNESS] < melhor_solucao[const.INDICE_FITNESS]):
             contador = 0
             melhor_solucao = copy.deepcopy(solucao)
         else: 
-            contador = contador + 1 
+            contador += 1 
     return melhor_solucao
 
 
@@ -109,14 +114,20 @@ def busca_local(solucao_inicial, max_iteracoes = 1000, limite = 0):
 ### ALFA_RCL PRÓXIMO A UM   -> BUSCA MAIS ALEATORIA 
 ### E NO LIMITE (THRESHOLD) PARA ENCERRAR A BUSCA GLOBAL (LIMITE - PADRAO = 0)
 
-def grasp_grade(aulas, solucao_inicial = [[],float("inf")], max_iteracoes = 5000, alfa_rcl = 0.5, limite = 0):
+def grasp_grade(aulas, 
+                solucao_inicial = const.PADRAO_SOLUCAO_INICIAL_VAZIA, 
+                max_iteracoes = const.PADRAO_MAX_ITERACOES_GRASP, 
+                alfa_rcl = const.PADRAO_ALFA_RCL, 
+                limite = const.PADRAO_LIMITE_GRASP,
+                max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL
+                limite_busca_local = const.PADRAO_LIMITE_BUSCA_LOCAL):
     contador = 0
     melhor_solucao = copy.deepcopy(solucao_inicial)
-    while (contador < max_iteracoes and melhor_solucao[1]>limite):
+    while (contador < max_iteracoes and melhor_solucao[const.INDICE_FITNESS]>limite):
         solucao = grasp_construcao(aulas, alfa_rcl)
-        solucao = busca_local(solucao, max_iteracoes = 100, limite = limite)
-        if (solucao[1] < melhor_solucao[1]):
+        solucao = busca_local(solucao, max_iteracoes = max_iteracoes_busca_local, limite = limite_busca_local)
+        if (solucao[const.INDICE_FITNESS] < melhor_solucao[const.INDICE_FITNESS]):
             melhor_solucao = copy.deepcopy(solucao) 
-        contador = contador + 1
-        print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[1], end='')
+        contador += 1
+        print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
     return melhor_solucao
