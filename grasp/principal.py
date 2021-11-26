@@ -34,8 +34,8 @@ def gera_aulas(prof_disc_hora):
     aulas = [] 
     for i in range(0, prof_disc_hora.shape[0]):
         aula = prof_disc_hora[i] 
-        num_periodos = aula[2]
-        for j in range(0, num_periodos):
+        qtde_horarios_aula = aula[2]
+        for j in range(0, qtde_horarios_aula):
           aulas.append((aula[0],aula[1]))
     # Se a quantidade de aulas < 50 preenche a lista aulas com valores VAGO
     for i in range(len(aulas),50):
@@ -54,7 +54,7 @@ def imprime_solucao(solucao):
         if (i % 5 == 0):
             print('\nHorario ', 1+ i % 2, '--------------------')
         print(solucao[0][i], end = ' | ')
-    print('\nCusto da Solucao = ',solucao[1])    
+    print('\nFitness da Solucao = ',solucao[1])    
     return
 
 ### METODO PRINCIPAL QUE RECEBE A URL DO CASO DE TESTE E RETORNA 
