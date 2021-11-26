@@ -15,7 +15,7 @@ def calcula_custos(candidatos):
         if (candidatos[i][0] != 'VAGO'):
             professores.append(candidatos[i][0])
     for i in range(0, len(candidatos)):
-        custo = 50 - professores.count(candidatos[i][0])
+        custo = 50 - professores.count(candidatos[i][0]) # TOTAL GERAL DE AULAS MENOS QUANTAS AULAS (HORARIOS) NA SEMANA UM PROFESSOR TEM
         custos.append(custo)
     return custos
 
@@ -68,7 +68,7 @@ def calcula_vizinho(solucao_inicial):
     #sala = random.randrange(5)
     #trocas = [horarios[0]+10*sala, horarios[1]+10*sala]
 
-    # Randomizacao trocando todas as posicoes na grade
+    # Randomizacao trocando todas as posicoes na grade (seleciona dos valores aleatorios dentro da grade)
     trocas = random.sample(list(range(0,len(solucao_inicial[0]))), 2)
     solucao = copy.deepcopy(solucao_inicial)
     auxiliar = solucao[0][trocas[0]]
