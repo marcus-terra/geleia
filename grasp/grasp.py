@@ -129,5 +129,6 @@ def grasp_grade(aulas,
         if (solucao[const.INDICE_FITNESS] < melhor_solucao[const.INDICE_FITNESS]):
             melhor_solucao = copy.deepcopy(solucao) 
         contador += 1
-        print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
+        #print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
+        print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS])
     return melhor_solucao
