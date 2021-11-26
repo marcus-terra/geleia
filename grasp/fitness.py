@@ -64,7 +64,7 @@ def funcao_objetivo(solucao):
         posicao_final-=1
     for i in range(0, posicao_final+1):
         if (solucao[i][0] == 'VAGO'):
-            if ((i // 5) % 2 == 0) # o horario sem aula é o primeiro do dia
+            if ((i // 5) % 2 == 0): # o horario sem aula é o primeiro do dia
                violacoes+=0.1
             else:
                violacoes+=0.05 # o horario sem aula é o segundo do dia (penalização menor)
