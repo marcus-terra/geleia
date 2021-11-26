@@ -1,6 +1,29 @@
 import copy
 import constantes as const
 
+### CONSTANTES UTILIZADAS PELA FUNCAO
+### A CRIACAO DA REFERENCIA LOCAL SE MOSTROU MAIS PERFORMÁTICA (EM TORNO DE 20%) 
+
+# CONFIGURACAO DA GRADE ESCOLAR
+TOTAL_DIAS = const.TOTAL_DIAS
+TOTAL_SALAS = const.TOTAL_SALAS
+TOTAL_HORARIOS_DIA = const.TOTAL_HORARIOS_DIA
+TOTAL_HORARIOS_GRADE = const.TOTAL_HORARIOS_GRADE
+
+# INDICES (POSICOES) DOS ELEMENTOS NO VETOR AULAS [PROFESSOR, DISCIPLINA]
+INDICE_PROFESSOR = const.INDICE_PROFESSOR
+INDICE_DISCIPLINA = const.INDICE_DISCIPLINA
+
+# REPRESENTACAO HORARIO VAGO NA GRADE
+HORARIO_VAGO = const.HORARIO_VAGO
+
+# PESO DAS VIOLACOES NA FUNCAO OBJETIVO (FITNESS)
+PESO_PROF_MESMO_HORARIO = const.PESO_PROF_MESMO_HORARIO
+PESO_DISC_MESMO_DIA_SALA_DIFER = const.PESO_DISC_MESMO_DIA_SALA_DIFER
+PESO_DISC_MESMO_DIA_SALA_IGUAL = const.PESO_DISC_MESMO_DIA_SALA_IGUAL
+PESO_PRIMEIRO_HORARIO_VAGO = const.PESO_PRIMEIRO_HORARIO_VAGO
+PESO_SEGUNDO_HORARIO_VAGO = const.PESO_SEGUNDO_HORARIO_VAGO
+
 ### FUNCAO OBJETIVO (FITNESS)
 ### AS FORMAS DO CALCULO ESTAO DEFINIDAS NOS COMENTARIOS DENTRO DA FUNCAO
 ### É UMA FUNCAO DE MINIMIZACAO QUE RETORNA VALOR ENTRE 0 E 1 
@@ -15,17 +38,17 @@ def funcao_objetivo(grade):
 # A premissa 2) já engloba a premissa 1) pois cada disciplina
 # tem sempre o mesmo professor
     
-    for dia in range(const.TOTAL_DIAS):
-        for horario in range(const.TOTAL_HORARIOS_DIA):
-            for sala_atual in range(const.TOTAL_SALAS):
-                evento_atual = dia*const.TOTAL_DIAS*const.TOTAL_HORARIOS_DIA+horario*const.TOTAL_SALAS+sala_atual 
-                professor_atual = grade[evento_atual][const.INDICE_PROFESSOR]
-                if (professor_atual != const.HORARIO_VAGO):
-                    for proxima_sala in range(sala_atual+1,const.TOTAL_SALAS):
-                        proximo_evento = dia*const.TOTAL_DIAS*const.TOTAL_HORARIOS_DIA+horario*const.TOTAL_SALAS+proxima_sala
-                        proximo_professor = grade[proximo_evento][const.INDICE_PROFESSOR]
+    for dia in range(TOTAL_DIAS):
+        for horario in range(TOTAL_HORARIOS_DIA):
+            for sala_atual in range(TOTAL_SALAS):
+                evento_atual = dia*TOTAL_DIAS*TOTAL_HORARIOS_DIA+horario*TOTAL_SALAS+sala_atual 
+                professor_atual = grade[evento_atual][INDICE_PROFESSOR]
+                if (professor_atual != HORARIO_VAGO):
+                    for proxima_sala in range(sala_atual+1,TOTAL_SALAS):
+                        proximo_evento = dia*TOTAL_DIAS*TOTAL_HORARIOS_DIA+horario*TOTAL_SALAS+proxima_sala
+                        proximo_professor = grade[proximo_evento][INDICE_PROFESSOR]
                         if (professor_atual == proximo_professor):
-                            violacoes += const.PESO_PROF_MESMO_HORARIO
+                            violacoes += PESO_PROF_MESMO_HORARIO
                             # evita a recontagem quando o mesmo professor 
                             # aparece mais de 2 vezes no mesmo dia e horario
                             break
@@ -35,19 +58,19 @@ def funcao_objetivo(grade):
 # é desejável que as aulas não sejam na sequência imediata (mesmo dia);
 # Como é uma premissa desejável e não obrigatória o peso da violacao é 0.1
     
-    for dia in range(const.TOTAL_DIAS):
-        for sala_h1 in range(const.TOTAL_SALAS):
-            evento_h1 = dia*const.TOTAL_DIAS*const.TOTAL_HORARIOS_DIA+sala_h1
-            disciplina_h1 = grade[evento_h1][const.INDICE_DISCIPLINA]
-            if (disciplina_h1 != const.HORARIO_VAGO):
-                for sala_h2 in range(const.TOTAL_SALAS):
-                    evento_h2 = dia*const.TOTAL_DIAS*const.TOTAL_HORARIOS_DIA+sala_h2+const.TOTAL_SALAS
-                    disciplina_h2 = grade[evento_h2][const.INDICE_DISCIPLINA]
+    for dia in range(TOTAL_DIAS):
+        for sala_h1 in range(TOTAL_SALAS):
+            evento_h1 = dia*TOTAL_DIAS*TOTAL_HORARIOS_DIA+sala_h1
+            disciplina_h1 = grade[evento_h1][INDICE_DISCIPLINA]
+            if (disciplina_h1 != HORARIO_VAGO):
+                for sala_h2 in range(TOTAL_SALAS):
+                    evento_h2 = dia*TOTAL_DIAS*TOTAL_HORARIOS_DIA+sala_h2+TOTAL_SALAS
+                    disciplina_h2 = grade[evento_h2][INDICE_DISCIPLINA]
                     if (disciplina_h1 == disciplina_h2): # a mesma disciplina acontece no mesmo dia
                         if (sala_h1 == sala_h2): # se for na mesma sala a penalizacao reduz pela metade
-                            violacoes+=const.PESO_DISC_MESMO_DIA_SALA_IGUAL
+                            violacoes+=PESO_DISC_MESMO_DIA_SALA_IGUAL
                         else:
-                            violacoes+=const.PESO_DISC_MESMO_DIA_SALA_DIFER
+                            violacoes+=PESO_DISC_MESMO_DIA_SALA_DIFER
                         # a regra anterior já penaliza a mesma disciplina no mesmo horário
                         # assim para não penalizar novamente o laço é interrompido
                         break 
@@ -60,15 +83,15 @@ def funcao_objetivo(grade):
 # 0.1 Se o horário vago for o primeiro do dia
 # 0.05 Se o horario vago for o segundo do dia
     
-    posicao_final = const.TOTAL_HORARIOS_GRADE - 1;
-    while (posicao_final > -1 and grade[posicao_final][const.INDICE_PROFESSOR] == const.HORARIO_VAGO):
+    posicao_final = TOTAL_HORARIOS_GRADE - 1;
+    while (posicao_final > -1 and grade[posicao_final][INDICE_PROFESSOR] == HORARIO_VAGO):
         posicao_final -= 1
     for i in range(0, posicao_final+1):
-        if (grade[i][const.INDICE_PROFESSOR] == const.HORARIO_VAGO):
-            if ((i // const.TOTAL_SALAS) % 2 == 0): # o horario sem aula é o primeiro do dia
-               violacoes+=const.PESO_PRIMEIRO_HORARIO_VAGO
+        if (grade[i][INDICE_PROFESSOR] == HORARIO_VAGO):
+            if ((i // TOTAL_SALAS) % 2 == 0): # o horario sem aula é o primeiro do dia
+               violacoes+=PESO_PRIMEIRO_HORARIO_VAGO
             else:
-               violacoes+=const.PESO_SEGUNDO_HORARIO_VAGO # o horario sem aula é o segundo do dia (penalização menor)
+               violacoes+=PESO_SEGUNDO_HORARIO_VAGO # o horario sem aula é o segundo do dia (penalização menor)
 
 
 # OBS: Uma questao importante é saber se o peso da violacao 
