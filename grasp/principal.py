@@ -11,7 +11,7 @@ import constantes as const
 ### (DISCIPLINA, PROFESSOR)
 
 def solucao_aleatoria(aulas):
-    solucao = const.PADRAO_SOLUCAO_INICIAL_VAZIA
+    solucao = copy.deepcopy(const.PADRAO_SOLUCAO_INICIAL_VAZIA)
     solucao[const.INDICE_GRADE] = random.sample(aulas, len(aulas))
     solucao[const.INDICE_FITNESS] = fitness.funcao_objetivo(solucao[const.INDICE_GRADE])
     return solucao
