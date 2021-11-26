@@ -119,7 +119,7 @@ def grasp_grade(aulas,
                 max_iteracoes = const.PADRAO_MAX_ITERACOES_GRASP, 
                 alfa_rcl = const.PADRAO_ALFA_RCL, 
                 limite = const.PADRAO_LIMITE_GRASP,
-                max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL
+                max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL,
                 limite_busca_local = const.PADRAO_LIMITE_BUSCA_LOCAL):
     contador = 0
     melhor_solucao = copy.deepcopy(solucao_inicial)
