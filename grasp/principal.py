@@ -74,7 +74,7 @@ def principal(url_caso_de_teste,
                                        max_iteracoes = max_iteracoes,                        
                                        alfa_rcl = alfa_rcl, 
                                        limite = limite,
-                                       max_iteracoes_busca_local = max_iteracoes_busca_local
+                                       max_iteracoes_busca_local = max_iteracoes_busca_local,
                                        limite_busca_local = limite_busca_local)
     imprime_solucao(melhor_solucao)
     return
