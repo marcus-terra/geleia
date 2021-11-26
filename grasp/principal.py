@@ -68,7 +68,8 @@ def principal(url_caso_de_teste,
     aulas = gera_aulas(prof_disc_hora)
     solucao_inicial = const.PADRAO_SOLUCAO_INICIAL_VAZIA
     if (calcula_solucao_inicial):
-        solucao_inicial = solucao_aleatoria(aulas)      
+        solucao_inicial = solucao_aleatoria(aulas)
+        imprime_solucao(solucao_incial)
     melhor_solucao = grasp.grasp_grade(aulas, 
                                        solucao_inicial = solucao_inicial, 
                                        max_iteracoes = max_iteracoes,                        
