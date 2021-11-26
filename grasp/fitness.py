@@ -42,6 +42,8 @@ def funcao_objetivo(solucao):
             disciplina_h1 = solucao[evento_h1][1]
             if (disciplina_h1 != 'VAGO'):
                 for sala_h2 in range(total_salas):
+                    print('SALA_1=',sala_h1)
+                    print('SALA_2=',sala_h2)
                     evento_h2 = dia*total_dias*total_horarios+sala_h2+total_salas
                     disciplina_h2 = solucao[evento_h2][1]
                     print('EVENTO_1=',evento_h1)
