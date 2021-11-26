@@ -66,7 +66,7 @@ def principal(url_caso_de_teste,
     prof_disc_hora = pd.read_csv(url_caso_de_teste, sep = const.SEPARADOR_CSV)
     prof_disc_hora = prof_disc_hora.values
     aulas = gera_aulas(prof_disc_hora)
-    solucao_inicial = copy.deepcopy(const.PADRAO_SOLUCAO_INICIAL_VAZIA)
+    solucao_inicial = const.PADRAO_SOLUCAO_INICIAL_VAZIA
     if (calcula_solucao_inicial):
         solucao_inicial = solucao_aleatoria(aulas)
     melhor_solucao = grasp.grasp_grade(aulas, 
