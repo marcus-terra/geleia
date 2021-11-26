@@ -1,5 +1,5 @@
 import copy
-import constantes as cont
+import constantes as const
 
 ### FUNCAO OBJETIVO (FITNESS)
 ### AS FORMAS DO CALCULO ESTAO DEFINIDAS NOS COMENTARIOS DENTRO DA FUNCAO
