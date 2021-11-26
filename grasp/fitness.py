@@ -44,8 +44,8 @@ def funcao_objetivo(solucao):
                 for sala_h2 in range(total_salas):
                     evento_h2 = dia*total_dias*total_horarios+sala_h2+total_salas
                     disciplina_h2 = solucao[evento_h2][1]
-                    print(disciplina_h1)
-                    print(disciplina_h2)
+                    print('D1=',disciplina_h1)
+                    print('D2=',disciplina_h2)
                     if (disciplina_h1 == disciplina_h2): # a mesma disciplina acontece no mesmo dia
                         if (sala_h1 == sala_h2): # se for na mesma sala a penalizacao reduz pela metade
                             violacoes+=0.05
