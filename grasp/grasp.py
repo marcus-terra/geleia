@@ -45,7 +45,7 @@ def calcula_rcl(candidatos, custos, custo_min, custo_max, alfa_rcl = const.PADRA
 ### ALFA_RCL PRÓXIMO A UM   -> BUSCA MAIS ALEATORIA 
 
 def grasp_construcao(aulas, alfa_rcl = const.PADRAO_ALFA_RCL):
-    solucao = const.PADRAO_SOLUCAO_INICIAL_VAZIA
+    solucao = copy.deepcopy(const.PADRAO_SOLUCAO_INICIAL_VAZIA)
     candidatos = copy.deepcopy(aulas)
     custos = calcula_custos(candidatos)
     while (len(candidatos) > 0):
