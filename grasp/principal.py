@@ -61,7 +61,7 @@ def principal(url_caso_de_teste,
               max_iteracoes = const.PADRAO_MAX_ITERACOES_GRASP, 
               alfa_rcl = const.PADRAO_ALFA_RCL, 
               limite = const.PADRAO_LIMITE_GRASP,
-              max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL
+              max_iteracoes_busca_local = const.PADRAO_MAX_ITERACOES_BUSCA_LOCAL,
               limite_busca_local = const.PADRAO_LIMITE_BUSCA_LOCAL):
     prof_disc_hora = pd.read_csv(url_caso_de_teste, sep = const.SEPARADOR_CSV)
     prof_disc_hora = prof_disc_hora.values
