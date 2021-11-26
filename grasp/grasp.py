@@ -118,5 +118,5 @@ def grasp_grade(aulas, solucao_inicial = [[],float("inf")], max_iteracoes = 5000
         if (solucao[1] < melhor_solucao[1]):
             melhor_solucao = copy.deepcopy(solucao) 
         contador = contador + 1
-        print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[1])
+        print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[1], end='')
     return melhor_solucao
