@@ -43,7 +43,7 @@ def gera_aulas(prof_disc_hora):
 
 def imprime_solucao(solucao):
     for i in range(0,len(solucao[const.INDICE_GRADE])):
-        dia = DIAS_DA_SEMANA[i // const.TOTAL_AULAS_DIA]
+        dia = const.DIAS_DA_SEMANA[i // const.TOTAL_AULAS_DIA]
         if (i % const.TOTAL_AULAS_DIA == 0):
             print('\n\n',dia)
         if (i % const.TOTAL_SALAS == 0):
