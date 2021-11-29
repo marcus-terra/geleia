@@ -1,17 +1,45 @@
 import copy
 import random
 
-# prob = probalidades de seguir um caminho
+# probs = probalidades de seguir cada um dos caminhos
 
-def aco_construcao(aulas, tau, eta, alfa, beta):
+def funcao_objetivo(grade):
+    return
+
+def calcula_eta(grade, caminho_possiveis):
+    return
+
+def calcula_probabilidades(tau, eta, alfa, beta, caminhos_possiveis): 
+    return
+
+def roleta(probabilidades):
+    return
+
+def aco_construcao(aulas, tau, alfa, beta):
+    solucao = [[],float("inf")]
     grade = []
-    caminho_possiveis = copy.deepcopy(aulas)
-    qtde_aulas = len(aulas)
-    posicao_inicial = random.randrange(qtde_aulas)
-    grade.append(aulas[posicao_inicial])
-    while (len(grade) < qtde_aulas):
-      eta = calcula_eta(grade, caminho_impossiveis)
-      prob = calcula_probabilidade(tau, eta, alfa, beta, caminhos_impossiveis) 
+    caminhos_possiveis = copy.deepcopy(aulas)
+    posicao_inicial = random.randrange(len(aulas))
+    primeira_aula = aula[posicao_inicial]
+    grade.append(primeira_aula)
+    caminhos_possiveis.remove(primeira_aula)
+    while (caminho_possiveis > 0):
+        eta = calcula_eta(grade, caminho_possiveis)
+        probabilidades = calcula_probabilidades(tau, eta, alfa, beta, caminhos_possiveis) 
+        proxima_posicao = roleta(probabilidades)
+        proxima_aula = aulas[proxima_posicao]    
+        grade.append(proxima_aula)
+        caminhos_possiveis.remove(proxima_aula)
+    solucao[0] = grade
+    solucao[1] = funcao_objetivo(grade)
+    return solucao
+
+def deposita_feromonio(Q,delta_tau,melhor_solucao):
+    return
+
+def atualiza_feromonios(tau, ro, delta_tau):
+    return
+
 
 # Q = quantidade de feromônio excretada por uma formiga a cada iteração (Padrão = 1)
 # tau_0 = valor inicial para todos os feronômios (Padrão = 1)
@@ -36,8 +64,8 @@ def aco_grade(aulas,
             solucao = aco_construcao(aulas, tau, alfa, beta)
             if (solucao[1] < melhor_solucao[1]):
                 melhor_solucao = solucao
-            deposita_feromonio(Q,delta_tau,melhor_solucao)
-        atualiza_feronomios(tau, ro, delta_tau)
+            delta_tau = deposita_feromonio(Q, delta_tau, melhor_solucao)
+        tau = atualiza_feronomios(tau, ro, delta_tau)
         contador += 1
         #print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
         print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS])
