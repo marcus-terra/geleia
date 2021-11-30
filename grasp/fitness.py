@@ -104,5 +104,5 @@ def funcao_objetivo(grade):
 # O fitness (funcao objetivo) será :
 # Melhor - quanto mais se aproximar de 0 (menos violacoes)
 # Pior - quanto mais se aproximar de 1 (mais violacoes)
-    fitness = 1 - 1 / (1 * violacoes + 1);
+    fitness = 1 - 1 / (violacoes + 1);
     return fitness
