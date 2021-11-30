@@ -1,37 +1,40 @@
 import copy
 import random
+import numpy.random as npr
 
 # probs = probalidades de seguir cada um dos caminhos
 
-def funcao_objetivo(grade):
+def funcao_objetivo(aulas, grade):
     return
 
-def calcula_eta(grade, caminho_possiveis):
-    return
+def calcula_eta(aulas, grade, eta_atual, caminhos_possiveis):
+    for (i in len(caminho_possiveis)):
+        grade_possivel = copy.deepcopy(grade)
+        grade_possivel.append(cp)
+        eta[i] = # heuristica/fitness aula, grade_possivel
+    return eta
 
 def calcula_probabilidades(tau, eta, alfa, beta, caminhos_possiveis): 
-    return
-
-def roleta(probabilidades):
     return
 
 def aco_construcao(aulas, tau, alfa, beta):
     solucao = [[],float("inf")]
     grade = []
-    caminhos_possiveis = copy.deepcopy(aulas)
+    caminhos_possiveis = #vetor de 0 a 49
+    eta_atual = 0
     posicao_inicial = random.randrange(len(aulas))
-    primeira_aula = aula[posicao_inicial]
-    grade.append(primeira_aula)
-    caminhos_possiveis.remove(primeira_aula)
+    grade.append(posicao_inicial)
+    caminhos_possiveis.remove(posicao_inicial)
+    posicao_atual = posicao_inicial
     while (caminho_possiveis > 0):
-        eta = calcula_eta(grade, caminho_possiveis)
-        probabilidades = calcula_probabilidades(tau, eta, alfa, beta, caminhos_possiveis) 
-        proxima_posicao = roleta(probabilidades)
-        proxima_aula = aulas[proxima_posicao]    
-        grade.append(proxima_aula)
-        caminhos_possiveis.remove(proxima_aula)
+        eta = calcula_eta(aulas, grade, eta_atual, caminhos_possiveis)
+        probabilidades = calcula_probabilidades(tau[posicao_atual], eta, alfa, beta, caminhos_possiveis) # o tau sera somente da linha da posicao_atual
+        proxima_posicao = npr.choice(len(probabilidades), p=probabilidades)] # roleta
+        grade.append(proxima_posicao)
+        caminhos_possiveis.remove(proxima_posicao)
+        eta_atual = eta[proxima_posicao]
     solucao[0] = grade
-    solucao[1] = funcao_objetivo(grade)
+    solucao[1] = funcao_objetivo(aulas,grade)
     return solucao
 
 def deposita_feromonio(Q,delta_tau,melhor_solucao):
@@ -67,6 +70,5 @@ def aco_grade(aulas,
             delta_tau = deposita_feromonio(Q, delta_tau, melhor_solucao)
         tau = atualiza_feronomios(tau, ro, delta_tau)
         contador += 1
-        #print('\rIteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS], end='')
-        print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[const.INDICE_FITNESS])
+        print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[1])
     return melhor_solucao
