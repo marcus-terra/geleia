@@ -172,7 +172,7 @@ def aco_grade(aulas,
               Q = 1,
               tau_0 = 1,
               ro = 0.5,
-              qtde_formigas = 50):
+              qtde_formigas = 5):
     contador = 0
     melhor_solucao = solucao_inicial
     delta_tau = [[0 for col in range(50)] for lin in range(50)]
