@@ -184,6 +184,8 @@ def aco_grade(aulas,
                 melhor_solucao = solucao
             # elitista, reforça sempre a melhor solucao, mas nao sei se deposita sempre ou só quando encontra uma nova melhor solução     
             delta_tau = deposita_feromonio(Q, delta_tau, melhor_solucao) 
+            # atualiza delta_tau para todas as solucoes
+            # delta_tau = deposita_feromonio(Q, delta_tau, solucao) 
         tau = atualiza_feromonios(tau, ro, delta_tau)
         contador += 1
         print('Iteracao =', contador, '-> Custo Solucao =', melhor_solucao[1])
