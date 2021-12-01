@@ -25,7 +25,7 @@ data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues
 # Adicionando mais um valor com None pra representar ausência de professor
 data = data + [None]
 
-ga = pyeasyga.GeneticAlgorithm(data)
+ga = pyeasyga.GeneticAlgorithm(data, maximise_fitness=False)
 
 def create_individual(data):
 	# Retorna um vetor do tamanho de horários disponíveis preenchido com os professores 
