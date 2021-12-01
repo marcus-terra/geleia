@@ -3,13 +3,32 @@ import numpy as np
 from random import randrange
 from enum import Enum
 
+# Enum de penalizações
+class Penalizacoes(Enum):
+	indisponibilidade = 9999
+	horario_incompleto = 9999
+	aula_extra = 10
+
+# Enum de disciplinas
+class Disciplina(Enum):
+    historia = 'historia'
+    portugues = 'portugues'
+    geografia = 'geografia'
+    matematica = 'matematica'
+
+# Quantidade de horários por dia e dias de aula por semana, usado pra calcular os horários por semana
 horarios_dia = 2
 dias_semana = 5
 
 horarios_semana = lambda:[None for i in range(horarios_dia * dias_semana)]
 
-class Penalizacoes(Enum):
-	disponibilidade = 30
+# Exemplo de matérias por semana necessárias para a grade de uma classe
+materias_classe1 = {
+	Disciplina.historia.value: 2,
+	Disciplina.geografia.value: 2,
+	Disciplina.portugues.value: 2,
+	Disciplina.matematica.value: 3,
+}
 
 # 1 == indisponível
 # 0 == disponível
