@@ -47,7 +47,7 @@ def crossover(parent_1, parent_2):
 ga.crossover_function = crossover
 
 def mutate(individual):
-	individual[randrange(0, len(individual))] = data[randrange(0, len(individual))]
+	individual[randrange(0, len(individual))] = data[randrange(0, len(data))]
 	return individual
 
 ga.mutate_function = mutate
