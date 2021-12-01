@@ -20,11 +20,12 @@ data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues
 		{'nome_professor': 'professor4', 'disciplina_nome': Disciplina.geografia},
 		{'nome_professor': 'professor5', 'disciplina_nome': Disciplina.portugues}]
 
+# Adicionando mais um valor com None pra representar ausência de professor
+data = data + [None]
+
 ga = pyeasyga.GeneticAlgorithm(data)
 
 def create_individual(data):
-	# Adiciona um horário vago temporariamente na lista de professores
-	data = data + [None]
 	# Retorna um vetor do tamanho de horários disponíveis preenchido com os professores 
 	return [data[randrange(0, len(data))] for i in range(horarios_dia * dias_semana)]
 
