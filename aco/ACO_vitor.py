@@ -18,7 +18,9 @@ data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues
 		{'nome_professor': 'professor2', 'disciplina_nome': Disciplina.matematica},
 		{'nome_professor': 'professor3', 'disciplina_nome': Disciplina.historia},
 		{'nome_professor': 'professor4', 'disciplina_nome': Disciplina.geografia},
-		{'nome_professor': 'professor5', 'disciplina_nome': Disciplina.portugues}]
+		{'nome_professor': 'professor5', 'disciplina_nome': Disciplina.portugues},
+		{'nome_professor': 'topaTudoPorDinheiro', 'disciplina_nome': Disciplina.matematica},
+		{'nome_professor': 'preguicoso', 'disciplina_nome': Disciplina.matematica}]
 
 # Adicionando mais um valor com None pra representar ausência de professor
 data = data + [None]
