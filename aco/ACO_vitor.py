@@ -53,3 +53,9 @@ def mutate(individual):
 ga.mutate_function = mutate
 
 ga.run()
+
+for professor in ga.best_individual()[1]:
+	print(professor, '\n')
+print('\n')
+print(ga.best_individual(), '\n')
+print(ga.last_generation(), '\n')
