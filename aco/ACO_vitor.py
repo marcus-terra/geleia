@@ -8,6 +8,21 @@ dias_semana = 5
 
 horarios_semana = lambda:[None for i in range(horarios_dia * dias_semana)]
 
+class Penalizacoes(Enum):
+	disponibilidade = 30
+
+# 1 == indisponível
+# 0 == disponível
+disponibilidade_professores = {
+	'professor1': [1, 0, 1, 0, 1, 0, 0, 0, 1, 0],
+	'professor2': [0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
+	'professor3': [0, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+	'professor4': [0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+	'professor5': [1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
+	'topaTudoPorDinheiro': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	'preguicoso': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+}
+
 class Disciplina(Enum):
     portugues = 'portugues'
     matematica = 'matematica'
