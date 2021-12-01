@@ -1,39 +1,48 @@
-from AntColonyOptimization.AntColonyOptimizer import AntColonyOptimizer
+from pyeasyga import pyeasyga
 import numpy as np
+from random import randrange
+from enum import Enum
 
-exampleMatrix =  np.array([[ np.inf, 	   1, 	  12, 	  65, 	   7, 	   3, 	  23, 	   2],
-							[	  12, np.inf, 	   1, 	   1, 	  45, 	   6, 	  12, 	  34],
-							[	  23, 	  23, np.inf, 	   1, 	  13, 	   4, 	   4, 	   5],
-							[	   4, 	   1, 	   2, np.inf, 	   1, 	  43, 	  56, 	  67],
-							[	  12, 	   3, 	  23, 	   3, np.inf,	   1,	   1,	  89],
-							[	   5, 	  56, 	   3, 	  23, 	   3, np.inf,	   1,	  12],
-							[	  61, 	   5, 	  44, 	  64, 	   4,	  24, np.inf,	   1],
-							[	   4, 	  43, 	   5, 	   5, 	  35,	  12,	  34, np.inf]])
+horarios_dia = 2
+dias_semana = 5
 
-#						 	 prf1hr1|prf1hr2|prf1hr3|prf2hr1|prf2hr2|prf2hr3|prf0hr1|prf0hr2|prf0hr3
-distanceMatrix =  np.array([[ np.inf, np.inf, np.inf, np.inf,      1, 	   1, 	   1, 	   1, 	   1],
-							[ np.inf, np.inf, np.inf, 	   1, np.inf, np.inf, np.inf, np.inf, np.inf],
-							[ np.inf, np.inf, np.inf,     10,      1, 	   1, 	   1, 	   1, 	   1],
-							[ np.inf, 	   1,     10, np.inf, np.inf, 	  10, 	  10, 	  10, 	  10],
-							[ 	   1, np.inf, 	   1, np.inf, np.inf, np.inf, np.inf, np.inf, np.inf],
-							[	  10,      1, np.inf, np.inf, np.inf, np.inf, np.inf, np.inf, np.inf],
-							[ np.inf, 	   1, 	   1, np.inf,      1, np.inf, np.inf, np.inf, np.inf],
-							[	   1, np.inf, 	   1, 	   1, np.inf, np.inf, np.inf, np.inf, np.inf],
-							[	   1, 	   1, np.inf, 	   1,      1, np.inf, np.inf, np.inf, np.inf]])
+horarios_semana = lambda:[None for i in range(horarios_dia * dias_semana)]
 
-acoOptmizer1 = AntColonyOptimizer(ants=100, evaporation_rate=0.1, intensification=0.1)
+class Disciplina(Enum):
+    portugues = 'portugues'
+    matematica = 'matematica'
+    historia = 'historia'
+    geografia = 'geografia'
 
-acoOptmizer1.fit(distanceMatrix, iterations=300, early_stopping_count=300)
+data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues},
+		{'nome_professor': 'professor2', 'disciplina_nome': Disciplina.matematica},
+		{'nome_professor': 'professor3', 'disciplina_nome': Disciplina.historia},
+		{'nome_professor': 'professor4', 'disciplina_nome': Disciplina.geografia},
+		{'nome_professor': 'professor5', 'disciplina_nome': Disciplina.portugues}]
 
-acoOptmizer1.plot()
+ga = pyeasyga.GeneticAlgorithm(data)
 
-# --------------------------------------------------------------------------------------------
+def create_individual(data):
+	# Adiciona um horário vago temporariamente na lista de professores
+	data = data + [None]
+	# Retorna um vetor do tamanho de horários disponíveis preenchido com os professores 
+	return [data[randrange(0, len(data))] for i in range(horarios_dia * dias_semana)]
 
-diasDeTrabalho = 2
-horariosPorDia = 1
-qtdProfessores = 2
+ga.create_individual = create_individual
 
-horariosTotal = diasDeTrabalho * horariosPorDia
+def fitness(individual, data):
+	pass
 
-horariosPorProfessor = horariosTotal * qtdProfessores
+ga.fitness_function = fitness
 
+def crossover(parent_1, parent_2):
+	pass
+
+ga.crossover_function = crossover
+
+def mutate(individual):
+	pass
+
+ga.mutate_function = mutate
+
+ga.run()
