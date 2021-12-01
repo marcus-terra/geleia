@@ -31,12 +31,15 @@ def create_individual(data):
 ga.create_individual = create_individual
 
 def fitness(individual, data):
-	pass
+	return 10
 
 ga.fitness_function = fitness
 
 def crossover(parent_1, parent_2):
-	pass
+	crossover_index = randrange(1, len(parent_1))
+	child_1 = parent_1[:crossover_index] + parent_2[crossover_index:]
+	child_2 = parent_2[:crossover_index] + parent_1[crossover_index:]
+	return child_1, child_2
 
 ga.crossover_function = crossover
 
