@@ -24,10 +24,10 @@ disponibilidade_professores = {
 }
 
 class Disciplina(Enum):
-    portugues = 'portugues'
-    matematica = 'matematica'
     historia = 'historia'
+    portugues = 'portugues'
     geografia = 'geografia'
+    matematica = 'matematica'
 
 data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues},
 		{'nome_professor': 'professor2', 'disciplina_nome': Disciplina.matematica},
@@ -48,8 +48,13 @@ def create_individual(data):
 
 ga.create_individual = create_individual
 
-def fitness(individual, data):
-	return 10
+def fitness(solucao, data):
+	fitness_total = 0
+	for horario in range(len(solucao)):
+		professor = solucao[horario]
+		if professor is not None:
+			fitness_total += disponibilidade_professores[professor['nome_professor']][horario] * Penalizacoes.disponibilidade.value
+	return fitness_total
 
 ga.fitness_function = fitness
 
