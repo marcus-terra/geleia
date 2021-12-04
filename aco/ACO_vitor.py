@@ -5,8 +5,8 @@ from enum import Enum
 
 # Enum de penalizações
 class Penalizacoes(Enum):
-	indisponibilidade = 9999
-	horario_incompleto = 9999
+	indisponibilidade = 499
+	horario_incompleto = 1000
 	aula_extra = 10
 
 # Enum de disciplinas
@@ -37,7 +37,7 @@ data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues
 		{'nome_professor': 'professor4', 'disciplina_nome': Disciplina.geografia},
 		{'nome_professor': 'professor5', 'disciplina_nome': Disciplina.portugues},
 		{'nome_professor': 'topaTudoPorDinheiro', 'disciplina_nome': Disciplina.matematica},
-		{'nome_professor': 'preguicoso', 'disciplina_nome': Disciplina.historia}]
+		{'nome_professor': 'preguicoso', 'disciplina_nome': Disciplina.matematica}]
 
 # Dicionário de disponibilidade de cada professor
 # 1 == indisponível
@@ -45,8 +45,8 @@ data = [{'nome_professor': 'professor1', 'disciplina_nome': Disciplina.portugues
 disponibilidade_professores = {
 	'professor1': [1, 0, 1, 0, 1, 0, 0, 0, 1, 0],
 	'professor2': [0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
-	'professor3': [0, 0, 1, 0, 1, 0, 1, 0, 0, 0],
-	'professor4': [0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+	'professor3': [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+	'professor4': [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
 	'professor5': [1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
 	'topaTudoPorDinheiro': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	'preguicoso': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -56,7 +56,15 @@ disponibilidade_professores = {
 data = data + [None]
 
 # Inicializando o GA
-ga = pyeasyga.GeneticAlgorithm(data, maximise_fitness=False)
+ga = pyeasyga.GeneticAlgorithm(
+	data,
+	maximise_fitness=False,
+	population_size=300,
+	generations=1000,
+	crossover_probability=0.8,
+	mutation_probability=0.2,
+	elitism=True,
+)
 
 # Função que cria uma solução aleatória
 # data é a lista de professores possíveis
