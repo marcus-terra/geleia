@@ -5,7 +5,7 @@ from enum import Enum
 
 # Enum de penalizações
 class Penalizacoes(Enum):
-	indisponibilidade = 499
+	indisponibilidade = 501
 	horario_incompleto = 1000
 	aula_extra = 10
 
@@ -59,10 +59,10 @@ data = data + [None]
 ga = pyeasyga.GeneticAlgorithm(
 	data,
 	maximise_fitness=False,
-	population_size=300,
-	generations=1000,
-	crossover_probability=0.8,
-	mutation_probability=0.2,
+	population_size=500,
+	generations=10000,
+	crossover_probability=0.9,
+	mutation_probability=0.1,
 	elitism=True,
 )
 
