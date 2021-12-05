@@ -22,13 +22,14 @@ function saveAsCSV() {
   var fileName = 'dados_' + Utilities.formatDate(new Date(), "GMT-03:00", "dd-MM-yyyy_HH-mm-ss") + '.csv';
   var csvFile = convertRangeToCsvFile(fileName, sheet);
   var file = folder.createFile(fileName, csvFile);
+  file.setSharing(DriveApp.Access.ANYONE, DriveApp.Permission.VIEW);
   var downloadURL = file.getDownloadUrl().slice(0, -8);
   showurl(downloadURL);
   
 }
 
 function showurl(downloadURL) {
-   var link = HtmlService.createHtmlOutput('<center><a href="' + downloadURL + '">Clique aqui para fazer o download</a><center>');
+   var link = HtmlService.createHtmlOutput('<center><a href="' + downloadURL + '">Clique AQUI com o botão direito e depois em "Abrir link em uma nova guia" para fazer o download</a><center>');
   SpreadsheetApp.getUi().showModalDialog(link, 'O arquivo CSV está pronto!');
 }
 
@@ -38,15 +39,19 @@ function convertRangeToCsvFile(csvFileName, sheet) {
     if (data.length > 1) {
       var rows = [];
       data.forEach(row => {
+        var inserir = true;
         var cols = [];
         row.forEach(col => {
-          if (isNaN(col))
-              cols.push(`"${col.toString().replace(/"/g, '""')}"`);
+          if (col != "") 
+            if (isNaN(col))
+                cols.push(`"${col.toString().replace(/"/g, '""')}"`);
+            else
+                cols.push(col);
           else
-              cols.push(col);
+            inserir = false
         });
-
-        rows.push(cols.join(delimiter));
+        if (inserir)
+          rows.push(cols.join(delimiter));
       });
       
       return rows.join('\r\n');
@@ -55,4 +60,21 @@ function convertRangeToCsvFile(csvFileName, sheet) {
     Logger.log(err);
     Browser.msgBox(err);
   }
+}
+
+function redefinirPlanilha() {
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.alert('Atenção', 'Todos os dados serão excluídos. Deseja Continuar?', ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    var ss = SpreadsheetApp.getActiveSpreadsheet(); 
+    var sheet = ss.getSheetByName('Disponibilidades');
+    var range = sheet.getRangeList(['A5:K54']);
+    range.clearContent();
+    sheet = ss.getSheetByName('Dados');
+    range = sheet.getRangeList(['A2:C51']);
+    range.clearContent();
+  } 
+  
 }
