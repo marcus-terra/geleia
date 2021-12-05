@@ -222,12 +222,16 @@ def fitness (individuo, dados_iniciais):
     fitness = 1 - 1 / (violacoes + 1)
     return fitness
 
-# Imprime a Solucao Encontrada
-def imprime_solucao(aulas, solucao):
-    posicoes_grade = solucao[INDICE_GRADE]
+# Gera Grade a partir das Aulas e da Solucao (Posicoes) encontrada
+def gera_grade(aulas, solucao):
     grade = [[] for _ in range(TOTAL_HORARIOS_GRADE)]
-    for i in range(len(posicoes_grade)):
-        grade[i] = aulas[posicoes_grade[i]]
+    for i in range(len(solucao)):
+        grade[i] = aulas[solucao[i]]
+    return grade
+
+# Imprime a Solucao Encontrada [grade, valor fitness]
+def imprime_solucao(solucao):
+    grade = solucao[INDICE_GRADE]
     for i in range(0,len(grade)):
         dia = DIAS_DA_SEMANA[i // TOTAL_AULAS_DIA]
         if (i % TOTAL_AULAS_DIA == 0):
@@ -286,10 +290,13 @@ def geleia_ga(url_config,
     # Executa o GA
     ga.run()                            
 
-    # Imprime a Solucao Encontrada
-    imprime_solucao(aulas, ga.best_individual())
+    grade = gera_grade(aulas, ga.best_individual()[1])
+    solucao = [grade, ga.best_individual()[0]]
+    
+    return solucao
 
-    return
+#Exemplo de Execucao do programa para usando um caso de teste
+solucao = geleia_ga('caso_p1.csv')
 
-#Execucao do programa usando um caso de teste e 
-geleia_ga('caso1.csv',geracoes=500)
+# Imprime a Solucao Encontrada
+imprime_solucao(solucao)
